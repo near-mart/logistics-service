@@ -3,11 +3,11 @@ require("dotenv").config({ path })
 const redis = require("redis")
 
 
-console.log("redis port-->", `redis://${process.env.REDIS_BASE_URL}:${process.env.REDIS_PORT}`);
+console.log("redis port-->", `${process.env.REDIS_BASE_URL}`);
 
 
 const baseRedisClient = redis.createClient({
-    url: `redis://${process.env.REDIS_BASE_URL}:${process.env.REDIS_PORT}`,
+    url: `${process.env.REDIS_BASE_URL}`,
 });
 
 const redisCall = async () => {
