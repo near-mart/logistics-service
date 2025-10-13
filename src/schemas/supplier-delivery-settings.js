@@ -46,6 +46,10 @@ const deliverySettingsSchema = new mongoose.Schema(
         status: {
             type: Boolean,
             default: true
+        },
+        isSameDayDelivery: {
+            type: Boolean,
+            default: true
         }
     },
     { timestamps: true }
