@@ -6,5 +6,6 @@ const deliveryRoute = express.Router()
 deliveryRoute.post("/supplier/delivery/settings", asyncHandler(upsertDeliverySettings))
 deliveryRoute.get("/supplier/delivery/settings", asyncHandler(getDeliverySettings))
 deliveryRoute.get("/supplier/delivery/settings/:supplier", asyncHandler(getDeliverySettingsBySupplierId))
+deliveryRoute.get("/no-auth/delivery/settings/:supplier", asyncHandler(getDeliverySettingsBySupplierId))
 
 module.exports = deliveryRoute

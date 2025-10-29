@@ -108,7 +108,7 @@ const getDeliverySettingsBySupplierId = async (_req, _res) => {
         const settings = await SupplierDeliverySettingsModel.findOne({ supplier });
 
         if (!settings) {
-            return _res.status(404).json(error(404, "No delivery settings found for this supplier"));
+            return _res.status(200).json(success({}, "No delivery settings found for this supplier"));
         }
 
         return _res.status(200).json(success(settings, "Delivery settings fetched successfully"));
