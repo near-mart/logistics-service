@@ -88,7 +88,9 @@ const getDeliverySettings = async (_req, _res) => {
         const settings = await SupplierDeliverySettingsModel.findOne({ supplier });
 
         if (!settings) {
-            return _res.status(404).json(error(404, "No delivery settings found for this supplier"));
+            // return _res.status(404).json(error(404, "No delivery settings found for this supplier"));
+            return _res.status(200).json(success({ ...DEFAULT_SETTINGS, supplier }, "No delivery settings found for this supplier, returning system defaults."));
+
         }
         await baseRedisClient.set(cacheKey, JSON.stringify(settings));
         await baseRedisClient.expire(cacheKey, 120);
@@ -98,6 +100,21 @@ const getDeliverySettings = async (_req, _res) => {
         return _res.status(500).json(error(500, err.message));
     }
 };
+const DEFAULT_SETTINGS = {
+    delivery_type: "flat",
+    flat_charge: 0,
+    per_km_charge: 0,
+    max_delivery_km: 15,
+    free_delivery_above: 0,
+    packing_charge: 0,
+    status: true,
+    isSameDayDelivery: true,
+    location: {
+        type: "Point",
+        coordinates: [0, 0]
+    }
+};
+
 const getDeliverySettingsBySupplierId = async (_req, _res) => {
     try {
         const supplier = _req.params.supplier
@@ -108,7 +125,7 @@ const getDeliverySettingsBySupplierId = async (_req, _res) => {
         const settings = await SupplierDeliverySettingsModel.findOne({ supplier });
 
         if (!settings) {
-            return _res.status(200).json(success({}, "No delivery settings found for this supplier"));
+            return _res.status(200).json(success({ ...DEFAULT_SETTINGS, supplier }, "No delivery settings found for this supplier, returning system defaults."));
         }
 
         return _res.status(200).json(success(settings, "Delivery settings fetched successfully"));
